@@ -11,8 +11,8 @@
         android:label="travelapp"
         android:icon="@mipmap/ic_launcher">
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyB0drhX2KN-4jwr5g8otWWNkM8NfLIZcSc"/>
+        <!-- <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyB0drhX2KN-4jwr5g8otWWNkM8NfLIZcSc"/> -->
                
         <activity
             android:name=".MainActivity"

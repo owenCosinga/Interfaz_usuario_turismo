@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:travelapp/bloc/map_bloc.dart';
+import 'package:travelapp/Models/Destination.dart';
 
 class MapMarkers extends StatefulWidget {
-  const MapMarkers({ Key key }) : super(key: key);
+  const MapMarkers({ Key key, this.tipo , this.nameDestination }) : super(key: key);
 
+  final String tipo;
+  final String nameDestination;
   @override
   State<MapMarkers> createState() => _MapMarkersState();
 }
 
 class _MapMarkersState extends State<MapMarkers> {
 
-  final _mapBloc = MapBloc();
+  final _initialCameraPosition = const CameraPosition(
+    target: LatLng(-13.533020998851041, -71.96431210342163),
+    zoom: 8
+  );
   
   @override
   Widget build(BuildContext context) {
@@ -46,15 +51,68 @@ class _MapMarkersState extends State<MapMarkers> {
                 width: 300,
                 height: 450,
                 child: GoogleMap(
-                  // markers: _mapBloc.markers,
-                  initialCameraPosition: _mapBloc.initialCameraPosition,
+                    // polylines: controller.polylines,
+                    markers: addMakers(),
+                    polygons: drawPolygone(),
+                    initialCameraPosition: _initialCameraPosition,
+                    // onTap: controller.onTap,
                 ),
-              ),
+              )
             ),
           )
         ],
       )
       )
     );
+  }
+  Set<Marker> addMakers(){
+    Set<Marker> _markers = new Set();
+    List<Marker> listMakers = [];
+
+    if (widget.tipo == 'all') {
+      destinations.forEach((element) {
+        final maker = Marker(
+          markerId: MarkerId(element.name),
+          position: element.position
+        );
+
+        listMakers.add(maker);
+      });
+    } else {
+      destinations.forEach((element) {
+        if(element.name == widget.nameDestination){
+          final maker = Marker(
+            markerId: MarkerId(element.name),
+            position: element.position
+          );
+
+          listMakers.add(maker);
+        };
+      });
+    }
+    _markers.addAll(listMakers);
+
+    return _markers;
+  }
+
+  Set<Polygon> drawPolygone(){
+    Set<Polygon> _polygones = new Set();
+    List<LatLng> polygonLatLongs = [];
+
+    if(widget.tipo == 'all'){
+      destinations.forEach((element) {
+        polygonLatLongs.add(element.position);
+      });
+      _polygones.add( Polygon(
+          polygonId: PolygonId("polygoGroup"),
+          points: polygonLatLongs,
+          strokeWidth: 3,
+          strokeColor: Colors.blueAccent,
+          fillColor: Colors.transparent
+        )
+      );
+    }
+
+    return _polygones;
   }
 }

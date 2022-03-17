@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/Models/Destination.dart';
 
+import 'Widgets/map_markers.dart';
+
 class DestinationScreen extends StatefulWidget {
   final Destination destination;
 
@@ -42,16 +44,11 @@ class _DestinationScreenState extends State<DestinationScreen> {
                             radius: 20,
                             backgroundColor: Colors.white,
                             child: IconButton(
-                              icon: Icon(Icons.arrow_back, size: 30,),
+                              padding: EdgeInsets.zero,
+                              icon: Icon(Icons.arrow_back_ios_new, color: Colors.black,),
+                              iconSize: 25,
                               onPressed: () => Navigator.of(context).pop(true),
-                            )),
-                        CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.notifications,
-                              color: Colors.black,
-                            )),
+                            ))
                       ],
                     )),
                 Positioned(
@@ -72,11 +69,12 @@ class _DestinationScreenState extends State<DestinationScreen> {
                       child: CircleAvatar(
                           radius: 25,
                           backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                            size: 30,
-                          )),
+                          child: IconButton(
+                            icon: Icon(Icons.map, color: Colors.blue),
+                            iconSize: 30,
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MapMarkers(tipo: 'one', nameDestination: widget.destination.name)))
+                          )
+                          ),
                     )),
               ],
             ),

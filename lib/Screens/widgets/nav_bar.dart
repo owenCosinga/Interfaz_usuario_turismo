@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:travelapp/Screens/widgets/map_markers.dart';
 
 class navBar extends StatefulWidget {
 
@@ -48,7 +49,8 @@ class _navBarState extends State<navBar> {
           setState(() {
             _selectedIndex = index;
             if(index == 2){
-              Navigator.of(context).pushNamed('mapPreview');
+              // Navigator.of(context).pushNamed('mapPreview');
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MapMarkers(tipo: 'all',)));
             }
           });
         },
