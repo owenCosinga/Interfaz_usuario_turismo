@@ -1,7 +1,17 @@
-# Travel app
+# TURISMO APP
 
-Flutter Travel app UI.
+Esta es una aplicación movil de turismo
 
-## YouTube Link:
+## Instalación de dependencias 🔧
 
-[Flutter Travel app UI | Speed Code](https://youtu.be/jVJxIvYkYFY)
+```
+flutter pub get
+```
+
+## Autores ✒️
+
+* **Josue Piero Valenzuela Ancco** - *Dev - Documentación* - [gitlab](https://gitlab.com/valenzuelapier)
+* **Enrique Owen Cosinga Aponte** - *Dev - Documentación* - [gitlab](https://github.com/owenCosinga)
+
+
+
