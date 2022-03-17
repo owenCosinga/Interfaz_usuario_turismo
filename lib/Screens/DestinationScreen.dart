@@ -41,9 +41,9 @@ class _DestinationScreenState extends State<DestinationScreen> {
                         CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.black,
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back, size: 30,),
+                              onPressed: () => Navigator.of(context).pop(true),
                             )),
                         CircleAvatar(
                             radius: 20,

@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:travelapp/Models/Destination.dart';
 import 'package:travelapp/Screens/DestinationScreen.dart';
+import 'package:travelapp/Screens/widgets/nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,66 +42,49 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                      ),
-                      hintText: 'A Donde Vas?',
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      )),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height - 250,
-                child: PageView.builder(
-                    itemCount: destinations.length,
-                    controller: PageController(viewportFraction: 0.7),
-                    onPageChanged: (int index) =>
-                        setState(() => _index = index),
-                    itemBuilder: (context, i) {
-                      return Transform.scale(
-                        scale: i == _index ? 1.0 : 0.9,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => DestinationScreen(
-                                      destination: destinations[i],
-                                    )));
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height - 350,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: AssetImage(destinations[i].image),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.3),
-                                        spreadRadius: 2,
-                                        blurRadius: 2,
-                                        offset: Offset(2, 3),
-                                      )
-                                    ]),
+            Container(
+              height: MediaQuery.of(context).size.height - 250,
+              child: PageView.builder(
+                  itemCount: destinations.length,
+                  controller: PageController(viewportFraction: 0.7),
+                  onPageChanged: (int index) => setState(() => _index = index),
+                  itemBuilder: (context, i) {
+                    return Transform.scale(
+                      scale: i == _index ? 1.0 : 0.9,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DestinationScreen(
+                                    destination: destinations[i],
+                                  )));
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height - 350,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage(destinations[i].image),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.3),
+                                      spreadRadius: 2,
+                                      blurRadius: 2,
+                                      offset: Offset(2, 3),
+                                    )
+                                  ]),
+                            ),
+                            Text(
+                              destinations[i].name,
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500,
                               ),
-                              Text(
-                                destinations[i].name,
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                            )
                             ],
                           ),
                         ),
@@ -110,45 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-            color: Colors.white54,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: GNav(
-            gap: 8,
-            activeColor: Colors.blue,
-            iconSize: 25,
-            padding: EdgeInsets.all(5),
-            duration: Duration(milliseconds: 800),
-            tabBackgroundColor: Colors.white,
-            tabs: [
-              GButton(
-                icon: Icons.home,
-                text: 'hogar',
-              ),
-              GButton(
-                icon: Icons.favorite_border,
-                text: 'favorito',
-              ),
-              GButton(
-                icon: Icons.map,
-                text: 'mapa',
-              ),
-              GButton(
-                icon: Icons.person_outline,
-                text: 'perfil',
-              ),
-            ],
-            selectedIndex: _selectedIndex,
-            onTabChange: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-          ),
-        ),
+        bottomNavigationBar: navBar()
       ),
     );
   }
